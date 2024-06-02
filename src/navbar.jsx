@@ -8,7 +8,8 @@ function Navbar(){
     function shownavigation(){altnav(!shownav)}
     return(
         <>
-        <nav className="h-16  bg-[black] w-[100%]">
+        <nav className="sticky top-0">
+        <div className="h-16  bg-[black] w-[100%]">
             
         <div className=" h-full w-full flex justify-between">
             <div className="basis-[30%] mt-2 mx-10 ">
@@ -68,7 +69,7 @@ function Navbar(){
             </div>
             
             </div>
-        </nav>
+        </div>
 
        {shownav && <div className=" w-[220px] border-[black] border-8 bg-[black]  text-white text-xl flex flex-col  justify-between ">
             <div  style={{borderBottom: "1px solid gray"}} className="p-2">
@@ -89,6 +90,7 @@ function Navbar(){
                 <span onClick={shownavigation} className="mx-6"><NavLink to="/add-items" className={({ isActive }) => (isActive ? "text-orange-500" : "")}>Add Product</NavLink></span>
             </div>
         </div>}
+        </nav>
         </>
     )
 }
