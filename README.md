@@ -1,6 +1,5 @@
 # Creater Message
-this is production build nav bar that can be used for any project with little modifications.
-This navbar manages routing and have features like indicate active tab. So you don't need to add or mnage routing ,current active tab etc. It is full responsive for desktop , tabs and mobile screens.
+This is the production build projrct that i am continuing.I make sure that I build this project fully responsive and maximum functioality can be added.I will try my best to achoeve this.Best of luck
 
 
 # Important Note
