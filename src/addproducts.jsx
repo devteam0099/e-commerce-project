@@ -1,7 +1,19 @@
+import {useLocation,useParams } from 'react-router-dom'
+
 function Addproduct(){
+   const params = useParams()
+
+     const {firstname,lastname,username,email} = params 
+        
     return(
         <>
-        <h1>this is add products page</h1>
+        
+       <div>NAME</div> 
+       <div>{`${firstname} ${lastname}`}</div>
+       <div>USERNAME</div> 
+       <div>{username}</div>
+       <div>EMAIL</div> 
+       <div>{email}</div> 
         </>
     )
 }

@@ -13,9 +13,9 @@ export default function Home() {
         e.preventDefault()
         let formdata = new FormData()
         formdata.append('username', text)
-        formdata.append('images', image)
-        formdata.append('images',image2)
-        formdata.append('images',image3)
+        formdata.append('image1', image)
+        formdata.append('image2',image2)
+        formdata.append('image3',image3)
 
         
        try{

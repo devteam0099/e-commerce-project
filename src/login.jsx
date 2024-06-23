@@ -1,9 +1,11 @@
-import { useState } from "react";
-import sample7 from './images/sample7.jpg'
+import { useState  } from "react";
+import {  useNavigate } from 'react-router-dom';
 import sample8 from './images/sample8.jpg'
-import sample1 from './images/sample1.avif'
 import axios from 'axios'
+
 function Login(){
+    
+    const Navigate = useNavigate()
     let [shuffleform,setshufflevalue] = useState(true);
     let [image,setimage]= useState()
     let [inputfield,setinputfield] = useState({
@@ -15,39 +17,74 @@ function Login(){
         confpassword : "",
 
     })
-    console.log(inputfield)
+
     function formshuffle(){
         setshufflevalue(!shuffleform);
     }
+
     function inputchangehandler(inputfieldno,inputvalue){
         setinputfield((prev_value)=>({...prev_value, [inputfieldno] : inputvalue.target.value}))
     }
-    function postdata(){
+
+    async function postdata(){
        
-        const {firstname,lastname,email,username,password} = inputfield
+        const formdata = new FormData()
+        formdata.append('firstname',inputfield.firstname)
+        formdata.append('lastname',inputfield.lastname)
+        formdata.append('username',inputfield.username)
+        formdata.append('email', inputfield.email)
+        formdata.append('password', inputfield.password)
+        formdata.append('profileimage', image)
+
+        try {
+            alert('submitted')
+           const response = await axios.post('http://localhost:3000/api/users/register',formdata)
+           
+        } catch (error) {
+            alert('error')
+        }
+
+       }
+
+      async function handleLogin(){
+        alert('submitted')
         
-        async function backend(inputfield){
-            console.log(inputfield)
-        await fetch('/api/login', {
-             method: 'post',
-             body: JSON.stringify(firstname,lastname,email,username,password),
-             headers: {
-               'Content-Type': 'application/json'
-             }
-           })
-           .then((resp) => { alert("data is successfully sent to server")
-            
+        let usercred = {
+            username : inputfield.username,
+            password : inputfield.password
+        }
+
+            await axios.post('http://localhost:3000/api/users/login', usercred)
+            .then((resp)=>{
+             alert('login request has been recieved')
+            const data = [resp.data.firstname,resp.data.lastname,resp.data.username,resp.data.email]
+            Navigate(`/add-items/${data[0]}/${data[1]}/${data[2]}/${data[3]}`)
             })
-           .catch(() => { alert("error sending data") })
-           console.log("after sending to server" + firstname,lastname,email,username,password)
-          console.log( typeof(firstname,lastname,email,username,password))
-          
-    } backend()}
+            .catch(()=>{alert('can not validate login request')})
+     
+        
+
+       
+       }
+
+
     function imagehandler(e){
          setimage(e.target.files[0])
     }
+ 
+    let resethandler = ()=>{
+    
+    Navigate(`/reset-password/${inputfield.username}`);
+    
+    }
+    let accountfinder = ()=>{
+        Navigate('/account-finder')
+    }
+    
     return(
         < >
+ 
+
         <div style={{
         backgroundImage: `url(${sample8})`,
         backgroundSize: 'cover'}} className="  min-h-[100vh] py-[10%] "
@@ -82,13 +119,14 @@ function Login(){
             {shuffleform && <div className="flex flex-col w-[40%] h-auto rounded-xl mx-auto   bg-[black]/[0.9] " >
             <h2 className="text-white font-bold text-center text-2xl bg-orange-500 rounded p-5">Login</h2>
               <h3 className="text-center font-bold text-xl my-[3%] text-orange-500">Enter Username</h3>
-              <input type="text" name="loginuser" required={true} value={inputfield.username} className="border-orange-500 border-2 mx-[20%] w-[60%] h-[40px] rounded text-center" placeholder="enter your username" onChange={(e)=>inputchangehandler('password',e)} />
+              <input type="text" name="loginuser" required={true} value={inputfield.username} className="border-orange-500 border-2 mx-[20%] w-[60%] h-[40px] rounded text-center" placeholder="enter your username" onChange={(e)=>inputchangehandler('username',e)} />
               
-              <h3 className="text-center font-bold text-xl my-[3%] text-orange-500">Enter Username</h3>
+              <h3 className="text-center font-bold text-xl my-[3%] text-orange-500">Enter password</h3>
               <input type="password" name="password" required={true} value={inputfield.password} className="border-orange-500 border-2 mx-[20%] w-[60%] h-[40px] rounded text-center" placeholder="password" onChange={(e)=>inputchangehandler('password',e)} />
-              <button className="text-white bg-orange-500 rounded px-5 py-2 mx-[40%] my-3 border-orange-500 border-2  ">Login</button>
+              <h5 className="text-center font-bold text-sm my-[3%] text-orange-500 cursor-pointer" onClick={resethandler}>forget password</h5>
+              <button className="text-white bg-orange-500 rounded px-5 py-2 mx-[40%] my-3 border-orange-500 border-2  " onClick={handleLogin}>Login</button>
             <h6 className="mx-[25%] text-white">Already have an account?<span onClick={formshuffle} className="text-black text-orange-500 font-bold cursor-pointer">Signup</span></h6>
-           
+            <button className="text-white bg-orange-500 rounded px-5 py-2  my- border-orange-500 border-2 w-full " onClick={accountfinder} >Find My Account</button>
                 </div>}
                 </div>
         </>
