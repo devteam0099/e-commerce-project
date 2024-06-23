@@ -9,7 +9,7 @@ import Contact from './contact.jsx'
 import Login from './login.jsx'
 import Accountfinder from './findaccount.jsx'
 import Addproduct from './addproducts.jsx'
-import PassworsReset from './reset pass.jsx'
+import Updatepassword from './updatepassword.jsx'
 import App from './App.jsx'
 import { BrowserRouter,Route,Routes } from 'react-router-dom'
 import './index.css'
@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/login' element={<Login></Login>} />
       <Route path='/cart' element={<Cart></Cart>} /> 
       <Route path='/add-items/:firstname/:lastname/:username/:email' element={<Addproduct></Addproduct>} />
-      <Route path='/reset-password/:username' element={<PassworsReset></PassworsReset>} />
+      <Route path='/reset-password/:username' element={<Updatepassword></Updatepassword>} />
       <Route path='/account-finder' element={<Accountfinder></Accountfinder>} />     
     </Routes>
     </BrowserRouter>
