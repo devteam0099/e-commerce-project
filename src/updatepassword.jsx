@@ -26,10 +26,16 @@ function Updatepassword(){
    function passwordchanger(){
     
       if(parseInt(otp) === randnum){
-        alert('fiirst condition fulfils')
+        
         console.log(pass,confirmpass)
         if(pass === confirmpass){
-            alert('now we are in a condition to call axios')
+          let updateinfo = {
+            username : username,
+            password : pass
+          }
+           axios.post('http://localhost:3000/api/update-pass/save-pass',updateinfo)
+           .then((updateresp)=>{console.log(updateresp.data.message)})
+           .catch((updateerr)=>{alert('error while updating user')})
         }
         else{alert('passwords does not match')}
       }
