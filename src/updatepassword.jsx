@@ -43,20 +43,21 @@ function Updatepassword(){
    }
    
    return(
-    <>
-    <input className="border-2 border-black" value={input} onChange={(e)=>{setinput(e.target.value)}}/>
-    <button onClick={datahandler}>get otp code</button>
+    <div className="bg-gradient-to-br from-black to-gray-500 h-[100vh] py-10">
+      <div className="text-white md:mx-[570px] mx-[30%] text-xl">Reset Password</div>
+    <input className="border-2 border-orange-500 md:mx-[500px] mx-[100px] w-[50%] md:w-[20%] my-5 rounded h-12" value={input} onChange={(e)=>{setinput(e.target.value)}}/><br></br>
+    <button onClick={datahandler} className="text-white mx-[30%] md:mx-[570px] border-2 border-orange-500 rounded bg-orange-500 p-2">get otp code</button>
 
     {randnum && <div>
-        <div>enter otp code send to email</div>
-        <input className="border-2 border-black" value={otp} onChange={(e)=>{setotp(e.target.value)}}/>
-        <div>Enter New Password</div>
-        <input className="border-2 border-black" value={pass} onChange={(e)=>{setpass(e.target.value)}}/>
-        <div>Confirm Pasword</div>
-        <input className="border-2 border-black" value={confirmpass} onChange={(e)=>{setconfirmpass(e.target.value)}}/>
-        <button onClick={passwordchanger}>Change Password</button>
+        <div className="text-white md:mx-[500px] my-5 mx-[30%] text-xl">enter otp code send to email</div>
+        <input className="border-2 border-orange-500 md:mx-[500px] mx-[100px] w-[50%] md:w-[20%]  rounded h-12" value={otp} onChange={(e)=>{setotp(e.target.value)}}/>
+        <div className="text-white md:mx-[500px] my-5 mx-[30%] text-xl">Enter New Password</div>
+        <input className="border-2 border-orange-500 md:mx-[500px] mx-[100px] w-[50%] md:w-[20%]  rounded h-12" value={pass} onChange={(e)=>{setpass(e.target.value)}}/>
+        <div className="text-white md:mx-[500px] my-5 mx-[30%] text-xl">Confirm Pasword</div>
+        <input className="border-2 border-orange-500 md:mx-[500px] mx-[100px] w-[50%] md:w-[20%]  rounded h-12" value={confirmpass} onChange={(e)=>{setconfirmpass(e.target.value)}}/>
+        <button onClick={passwordchanger} className="text-white mx-[30%] md:mx-[570px] border-2 border-orange-500 rounded bg-orange-500 p-2 mt-2">Change Password</button>
         </div>}
-    </>
+    </div>
    )
 }
 export default Updatepassword

@@ -1,6 +1,5 @@
 import { useState  } from "react";
 import {  useNavigate } from 'react-router-dom';
-import sample8 from './images/sample8.jpg'
 import axios from 'axios'
 
 function Login(){
@@ -27,7 +26,7 @@ function Login(){
     }
 
     async function postdata(){
-       
+        if(inputfield.password === inputfield.confpassword){
         const formdata = new FormData()
         formdata.append('firstname',inputfield.firstname)
         formdata.append('lastname',inputfield.lastname)
@@ -35,18 +34,24 @@ function Login(){
         formdata.append('email', inputfield.email)
         formdata.append('password', inputfield.password)
         formdata.append('profileimage', image)
-
+       
         try {
             alert('submitted')
            const response = await axios.post('http://localhost:3000/api/users/register',formdata)
-           
+           alert('data has been submitted')
         } catch (error) {
             alert('error')
         }
+    }else{
+        alert('passwords do not match')
+    }
+    } 
 
-       }
+       
 
       async function handleLogin(){
+       if(inputfield.username && inputfield.password ){
+       
         alert('submitted')
         
         let usercred = {
@@ -63,7 +68,9 @@ function Login(){
             .catch(()=>{alert('can not validate login request')})
      
         
-
+        }else{
+            alert('you must fill both fields to login')
+        }
        
        }
 
@@ -73,9 +80,12 @@ function Login(){
     }
  
     let resethandler = ()=>{
+        if(inputfield.username){
     
     Navigate(`/reset-password/${inputfield.username}`);
-    
+        }else{
+            alert('you must fill username to update password')
+        }
     }
     let accountfinder = ()=>{
         Navigate('/account-finder')
@@ -85,11 +95,9 @@ function Login(){
         < >
  
 
-        <div style={{
-        backgroundImage: `url(${sample8})`,
-        backgroundSize: 'cover'}} className="  min-h-[100vh] py-[10%] "
+        <div className="bg-gradient-to-br from-black to-gray-500 min-h-[100vh] pt-10 pb-5"
 >
-        {!shuffleform && <div className="flex flex-col w-[40%] h-auto rounded-xl mx-auto  bg-[black] ">
+        {!shuffleform && <div className="flex flex-col md:w-[40%] w-[80%]  h-auto rounded-xl mx-auto  bg-[black] ">
             <div>
                 <h2 className="text-white font-bold text-center text-2xl bg-orange-500 rounded p-5">Register</h2>
                 <h3 className="text-center font-bold text-xl my-[3%] text-orange-500">First Name</h3>
@@ -107,8 +115,8 @@ function Login(){
             <input type="password" required={true} value={inputfield.confpassword} className="border-orange-500 border-2 mx-[20%] w-[60%] h-[40px] rounded text-center " placeholder="confirm password" onChange={(e)=>inputchangehandler('confpassword',e)} />
             <h3 className="text-center font-bold text-xl my-[3%] text-orange-500">Enter Profile Image</h3>
             <input type="file" className="border-orange-500 border-2 mx-[20%] w-[60%] h-[40px] rounded" onChange={imagehandler}  />
-            <button className="text-white bg-orange-500 rounded px-5 py-2 mx-[40%] my-3 border-orange-500 border-2  " onClick={postdata} >Submit</button>
-            <h6 className="mx-[25%] text-white">Already have an account?<span onClick={formshuffle} className="text-black text-orange-500 font-bold cursor-pointer">Login</span></h6>
+            <button className="text-white bg-orange-500 rounded px-5 py-2 md:mx-[40%] mx-[35%] my-3 border-orange-500 border-2  " onClick={postdata} >Submit</button>
+            <h6 className="md:mx-[25%] mx-[30%] text-white">Already have an account?<span onClick={formshuffle} className="text-black text-orange-500 font-bold cursor-pointer">Login</span></h6>
            
              </div>
 
@@ -116,17 +124,17 @@ function Login(){
             
             </div>}
 
-            {shuffleform && <div className="flex flex-col w-[40%] h-auto rounded-xl mx-auto   bg-[black]/[0.9] " >
-            <h2 className="text-white font-bold text-center text-2xl bg-orange-500 rounded p-5">Login</h2>
+            {shuffleform && <div className="flex flex-col sm:w-[40%] w-[80%] h-auto rounded-xl mx-auto   bg-[black]/[0.9] " >
+            <h2 className="text-white font-bold text-center md:text-2xl bg-orange-500 rounded md:p-5 p-3 text-xl">Login</h2>
               <h3 className="text-center font-bold text-xl my-[3%] text-orange-500">Enter Username</h3>
               <input type="text" name="loginuser" required={true} value={inputfield.username} className="border-orange-500 border-2 mx-[20%] w-[60%] h-[40px] rounded text-center" placeholder="enter your username" onChange={(e)=>inputchangehandler('username',e)} />
               
               <h3 className="text-center font-bold text-xl my-[3%] text-orange-500">Enter password</h3>
               <input type="password" name="password" required={true} value={inputfield.password} className="border-orange-500 border-2 mx-[20%] w-[60%] h-[40px] rounded text-center" placeholder="password" onChange={(e)=>inputchangehandler('password',e)} />
               <h5 className="text-center font-bold text-sm my-[3%] text-orange-500 cursor-pointer" onClick={resethandler}>forget password</h5>
-              <button className="text-white bg-orange-500 rounded px-5 py-2 mx-[40%] my-3 border-orange-500 border-2  " onClick={handleLogin}>Login</button>
-            <h6 className="mx-[25%] text-white">Already have an account?<span onClick={formshuffle} className="text-black text-orange-500 font-bold cursor-pointer">Signup</span></h6>
-            <button className="text-white bg-orange-500 rounded px-5 py-2  my- border-orange-500 border-2 w-full " onClick={accountfinder} >Find My Account</button>
+              <button className="text-white bg-orange-500 rounded md:px-5 px-5 py-2 mx-[auto] my-3 border-orange-500 border-2  " onClick={handleLogin}>Login</button>
+            <h6 className="md:mx-[25%] mx-[30%] text-white">Already have an account?<span onClick={formshuffle} className="text-black text-orange-500 font-bold cursor-pointer">Signup</span></h6>
+            <button className="text-white bg-orange-500 rounded px-5 py-2   my- border-orange-500 border-2 w-full " onClick={accountfinder} >Find My Account</button>
                 </div>}
                 </div>
         </>
