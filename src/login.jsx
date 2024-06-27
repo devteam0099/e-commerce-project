@@ -62,8 +62,9 @@ function Login(){
             await axios.post('http://localhost:3000/api/users/login', usercred)
             .then((resp)=>{
              alert('login request has been recieved')
-            const data = [resp.data.firstname,resp.data.lastname,resp.data.username,resp.data.email]
-            Navigate(`/add-items/${data[0]}/${data[1]}/${data[2]}/${data[3]}`)
+             console.log(resp.data)
+            const data = [resp.data.firstname,resp.data.lastname,resp.data.username,resp.data.email,resp.data.profileimage]
+            Navigate(`/add-items/${data[0]}/${data[1]}/${data[2]}/${data[3]}/${encodeURIComponent(data[4])}`)
             })
             .catch(()=>{alert('can not validate login request')})
      

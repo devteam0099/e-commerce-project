@@ -5,6 +5,7 @@ import Product from './products.jsx'
 import About from './about.jsx'
 import Cart from './cart.jsx'
 import Catagories from './catagories.jsx'
+import Productcred from './product-cred.jsx'
 import Contact from './contact.jsx'
 import Login from './login.jsx'
 import Accountfinder from './findaccount.jsx'
@@ -26,9 +27,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/about-us' element={<About></About>} />
       <Route path='/login' element={<Login></Login>} />
       <Route path='/cart' element={<Cart></Cart>} /> 
-      <Route path='/add-items/:firstname/:lastname/:username/:email' element={<Addproduct></Addproduct>} />
+      <Route path='/add-items/:firstname?/:lastname?/:username?/:email?/:profileimage?' element={<Addproduct></Addproduct>} />
       <Route path='/reset-password/:username' element={<Updatepassword></Updatepassword>} />
-      <Route path='/account-finder' element={<Accountfinder></Accountfinder>} />     
+      <Route path='/account-finder' element={<Accountfinder></Accountfinder>} /> 
+      <Route path='/product-cred' element={<Productcred></Productcred>} />     
     </Routes>
     </BrowserRouter>
     
