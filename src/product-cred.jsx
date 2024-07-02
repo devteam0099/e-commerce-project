@@ -5,6 +5,7 @@ import axios from "axios"
 function Productcred(e){
   const params = useParams()
   const {username} = params
+  
     
     let[image1,setimage1] = useState(null)
     let[image2,setimage2] = useState(null)
@@ -27,6 +28,7 @@ function Productcred(e){
 
    function submitdata(event){
     event.preventDefault()
+    console.log(username)
       let formdata = new FormData()
       formdata.append('productname' ,cinputval.productname)
       formdata.append('productstock' , cinputval.productstock)

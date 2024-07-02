@@ -1,11 +1,25 @@
+import React from "react";
 import { useState  } from "react";
+import useData from "./contextApi";
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
+ 
+ const userCredentials = []
+
 function Login(){
+    const {setglobaldata} = useData()
+   
     
     const Navigate = useNavigate()
     let [shuffleform,setshufflevalue] = useState(true);
+    let [globaluserdata, setglobaluserdata] = useState({
+        username : "",
+        email : "",
+        name : "",
+
+    })
+    
     let [image,setimage]= useState()
     let [inputfield,setinputfield] = useState({
         firstname : "",
@@ -64,6 +78,9 @@ function Login(){
              alert('login request has been recieved')
              console.log(resp.data)
             const data = [resp.data.firstname,resp.data.lastname,resp.data.username,resp.data.email,resp.data.profileimage]
+            userCredentials.push(resp.data.firstname,resp.data.lastname,resp.data.username,resp.data.email)
+            console.log(userCredentials)
+            setglobaldata(resp.data)
             Navigate(`/add-items/${data[0]}/${data[1]}/${data[2]}/${data[3]}/${encodeURIComponent(data[4])}`)
             })
             .catch(()=>{alert('can not validate login request')})
@@ -94,6 +111,8 @@ function Login(){
     
     return(
         < >
+        
+
  
 
         <div className="bg-gradient-to-br from-black to-gray-500 min-h-[100vh] pt-10 pb-5"
@@ -140,5 +159,8 @@ function Login(){
                 </div>
         </>
     )
+        
 }
+
+
 export default Login
