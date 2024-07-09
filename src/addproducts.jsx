@@ -28,19 +28,23 @@ function Addproduct(){
       field2 : ""
     })
     
-   
+    if (!globaldata && !username) {
+      return <Navigate to="/login" />;
+    }
     
    
     // api request to obtain store information
    
-    // useEffect(() => {
-    //    axios.post('http://localhost:3000/api/retrieve-store/access-shop', { username: username || globaldata.username })
-    //    .then((res)=>{
-    //     alert('store api called')
-    //     setstoreinfo(res.data.message)
-    //    })
-    //    .catch((errr)=>{alert('error in obtaining store info')})
-    // }, []);
+     useEffect(() => {
+        axios.post('http://localhost:3000/api/retrieve-store/access-shop', { username: username || globaldata.username })
+        .then((res)=>{
+         alert('store api called')
+         setstoreinfo(res.data.message)
+        })
+        .catch((errr)=>{alert('error in obtaining store info')})
+     }, []);
+
+    
     
     // api call for obtining products
     
@@ -73,9 +77,7 @@ function Addproduct(){
     
     
      // other utility functions
-     if (!globaldata && !username) {
-      return <Navigate to="/login" />;
-    }
+    
      
     function scrollHandler(){
           
@@ -128,7 +130,6 @@ async function registerstore(e){
      
 window.addEventListener(scroll,scrollHandler)
 
-
 if(!storeinfo){
   return(
     <form className="flex flex-col md:w-[40%] w-[80%]  h-auto rounded-xl mx-auto  bg-[black] ">
@@ -144,6 +145,7 @@ if(!storeinfo){
  }
 
 
+console.log(storeinfo)
  
     return(
         <div className='relative'>
@@ -171,7 +173,7 @@ if(!storeinfo){
   <div>
     <div className="text-center font-bold text-4xl my-5">Products</div>
     {productData.map((firstArray) => (
-      <div key={firstArray.object_id} className="inline-block h-[280px] w-[270px] mx-5">
+      <div key={firstArray._id} className="inline-block h-[280px] w-[270px] mx-5">
         {firstArray.map((item) => (
           <div className=''>
             <div key={item.createdAt} className='h-[280px] border-2 border-black w-[270px] m-10 rounded overflow-hidden cursor-pointer ' onClick={()=>{productDetails(item)}}>
