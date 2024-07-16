@@ -71,7 +71,7 @@ function ProductDetais(){
         
       <div className=" w-[70%] h-[40%] mx-auto mt-4">
       
-      <SmartSlider className="w-[80%] h-[40%] "   autoplay={true}
+      <SmartSlider className="w-[80%] h-[40%] "   autoPlay={true}
         slides={slidesArray}
         buttonShape="square" 
       />

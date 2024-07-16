@@ -1,64 +1,128 @@
 import React from 'react'
+import SmartSlider from 'react-smart-slider'
+import { json, Navigate ,useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { useState,useEffect } from 'react'
+import Product from './products'
 
 export default function Home() {
-  let [currentinput,setinput] = useState({
-    field1 : "",
-    field2 : ""
-  })
-  
+  const navigation = useNavigate()
+  let [products,setProducts] = useState([])
+  let [displayProducts,setDisplayProducts] = useState(false)
+  let [scrollMonitor,setScrollMonitor] = useState(false)
+  let [productData,setProductData] = useState(null)
+  let [navigator,setNavigator] = useState(false)  
+      useEffect(()=>{
+       ;(
+        async()=>{
+          try {
+            const productList = await axios.get('http://localhost:3000/api/get-products/products-data')
+            if(productList.data.message){
+              alert(productList.data.message)
+            }else{
+              setProducts((prev_Products)=>([...prev_Products,productList.data]))
+              setDisplayProducts(true)
+              console.log(products)
+              
+            }
+          } catch (error) {
+            alert('request to obtain products using axios not successful')
+          }
+        }
+       )()
+      },[scrollMonitor,setScrollMonitor])
 
-  function  valuesetter(currentField,currentval) {
-    setinput((prev_val)=>({...currentinput,[currentField] : currentval.target.value}))
-}
-
-   useEffect(()=>{
-
-    ;(
-      async()=>{
-       try {
-        const retrieveStore = await axios.post('http://localhost:3000/api/retrieve-store/access-shop',{username : 'abdullah'})
-        alert(retrieveStore.data.message)
-       } catch (error) {
-        alert('request sending error using axios')
+    
+   function scrollHandler(){
+       let totalScroll = document.body.scrollHeight
+       let userScroll = window.scrollY + 500
+       if(userScroll >= totalScroll){
+        setScrollMonitor(!scrollMonitor)
        }
       }
-    )()
-   })
+      function ItemDetails(product){
+       
+        console.log(product)
+       setProductData(product)
+       setNavigator(true) 
+       // console.log(product.productColors,product.productSizes)
+         //  navigate(`/item-details/${product.productName}/${product.productColors}/${product.productSizes}/${product.productStock}/${product.productPrice}/${product.productCatagory}/${product.productDiscount}/${product.productDisccription}/${product.productVarients}/${encodeURIComponent(product.productImages[0])}/${encodeURIComponent(product.productImages[1])}/${encodeURIComponent(product.productImages[2])}/${encodeURIComponent(product.productImages[3])}`)
+         
+      }
 
-
-   async function registerstore(e){
-    e.preventDefault()
-     await axios.post('http://localhost:3000/api/register-store/shop-build',{shopname : currentinput.field1,shopaddress : currentinput.field2,username : 'abdullah'})
-    .then((resserve)=>{
-      setstoredata(resserve.data.message)
-      alert(resserve.data.message)
-    })
-    .catch((error)=>{
-      setstoredata(null)
-      alert('request not successful')
-    })
-   }
+       let sliderimages= [
+         {
+           url : 'D:\OneDrive\Desktop\sample images\img1.jpeg'
+         },
+         {
+           url : 'D:\OneDrive\Desktop\sample images\img4.jpeg'
+         },
+         {
+           url : 'D:\OneDrive\Desktop\sample images\img5.jpeg'
+         },{
+           url : 'D:\OneDrive\Desktop\sample images\img7.jpeg'
+         }
+        ]
   
-
-
+      if(navigator){
+        return <Navigate to='/item-details' state={productData} />
+      }
+window.addEventListener('scroll',scrollHandler)
+  
+ return (
+  <>
+  
+  
+  <div className='h-[] w-[]'>
+  <SmartSlider  buttonShape="square"  autoPlay={true} autoPlayDuration={5000} 
+ />
  
+  </div >
+  <div className='flex w-full justify-between '>
+  <div className='w-[50%]'>
+    <input type='text' className='border-2 border-orange-500 rounded h-[40px] w-[40%]' />
+    <button className='bg-orange-500 rounded h-[40px] font-bold'>search products</button>
+  </div>
+  <div className='w-[50%]'>
+    <input type='text' className='border-2 border-orange-500 rounded h-[40px]' />
+    <button className='bg-orange-500 rounded h-[40px] font-bold'>search shops</button>
+  </div>
+</div>
+
+  <div className='text-4xl font-bold text-center mt-8'>LET'S START SHOPPING</div>
+    <div className="bg-white hover:cursor-pointer">
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <h2 className="sr-only">Products</h2>
+
+        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+          {products.map((product) => (
+            product.map((item)=>(
+              <div key={item._id} onClick={()=>{ItemDetails(item)}} className="group">
+              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                <img
+                  alt='no image found'
+                  src={item.productImages[0]}
+                  className="h-full w-full object-cover object-center group-hover:opacity-75"
+                />
+              </div>
+              <h3 className="mt-4 text-xl text-gray-700">{item.productName}</h3>
+              <p className="mt-1 text-lg font-medium text-gray-900">{item.productPrice}</p>
+            </div>
+            ))
+          ))}
+        </div>
+      </div>
+    </div>
   
-  return(
-    <form className="flex flex-col md:w-[40%] w-[80%]  h-auto rounded-xl mx-auto  bg-[black] ">
-        <div className="text-white font-bold text-center text-2xl bg-orange-500 rounded p-5">Store Registration</div>
-        <div className="text-center font-bold text-xl my-[3%] text-orange-500">Enter Shop Name*</div>
-        <input className="border-orange-500 border-2 mx-[20%] w-[60%] h-[40px] rounded text-center" value={currentinput.field1} onChange={(e)=>{valuesetter('field1',e)}}/>
-        <div className="text-center font-bold text-xl my-[3%] text-orange-500">Enter Shop Address*</div>
-        <input type='text' className="border-orange-500 border-2 mx-[20%] w-[60%] h-[40px] rounded text-center" value={currentinput.field2} onChange={(e)=>{valuesetter('field2',e)}}/>
-        <button className="text-white bg-orange-500 rounded  py-2 md:mx-[40%] mx-[35%] my-3 border-orange-500 border-2  " onstoreinfo={registerstore}  >Create a store</button>
-
-      </form>
-
-
-  )
+  </>
+ )
 }
+
+
+
+
+
+
 
 // useEffect(()=>{
     //   ;(

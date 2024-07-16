@@ -3,7 +3,9 @@ import { GlobaldataProvider } from './contextApi.js'
 import { useState } from 'react'
 import Home from './home.jsx'
 import Product from './products.jsx'
+import Itemdetails from './itemdetails.jsx'
 import ProductDetais from './productdetails.jsx'
+import PlaceOrder from './placeorder.jsx'
 import About from './about.jsx'
 import Cart from './cart.jsx'
 import Catagories from './catagories.jsx'
@@ -39,6 +41,10 @@ function AppRoutes(){
       <Route path='/account-finder' element={<Accountfinder></Accountfinder>} /> 
       <Route path='/product-cred/:username?' element={<Productcred></Productcred>} /> 
       <Route path='/product-details/:productname?/:productstock?/:productprice?/:productcatagory?/:productdisc?/:productdiscription?/:productvarients?/:firstimage?/:secondimage?/:thirdimage?/:forthimage?/:productID?/:username?' element={<ProductDetais></ProductDetais>} />  
+      <Route path="/item-details" element={<Itemdetails></Itemdetails>} />
+      <Route path="/place-order" element={<PlaceOrder></PlaceOrder>} />
+
+ 
       
     </Routes>
     </BrowserRouter>
@@ -49,3 +55,4 @@ function AppRoutes(){
 
 }
 export default AppRoutes;
+///:productname?/:productsizes?/:productcolors?/:productstock?/:productprice?/:productcatagory?/:productdisc?/:productdiscription?/:productvarients?/:firstimage?/:secondimage?/:thirdimage?/:forthimage?/:productID?/:username?
