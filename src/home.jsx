@@ -9,9 +9,14 @@ export default function Home() {
   const navigation = useNavigate()
   let [products,setProducts] = useState([])
   let [displayProducts,setDisplayProducts] = useState(false)
+  let [searchStore,setSearchStore] = useState(false)
+  let [storeValue,setStoreValue] = useState("")
+  let [storeInfo,setStoreInfo] = useState(null)
+  let [productName,setProductName] = useState('')
   let [scrollMonitor,setScrollMonitor] = useState(false)
   let [productData,setProductData] = useState(null)
   let [navigator,setNavigator] = useState(false)  
+
       useEffect(()=>{
        ;(
         async()=>{
@@ -63,9 +68,39 @@ export default function Home() {
            url : 'D:\OneDrive\Desktop\sample images\img7.jpeg'
          }
         ]
+
+       async function StoreInformation(){
+
+        if(storeValue === ""){
+          alert('pease enter any value to search store')
+        }else{
+            
+             
+          try {
+            const storeCred = await axios.post('http://localhost:3000/api/search-store/store-info',{storeValue})
+            if(storeCred.data.message){
+              alert(storeCred.data.message)
+            }else{
+              setStoreInfo(storeCred.data)
+            setSearchStore(true)
+            }
+         } catch (error) {
+           alert('error in sending using axios',error)            
+         }
+        }
+         
+        }
+
+        function navProductPage(){
+          navigation(`/search-products/${productName}`)
+        }
   
       if(navigator){
         return <Navigate to='/item-details' state={productData} />
+      }
+
+      if(searchStore){
+        return <Navigate to="/search-store" state={storeInfo} />
       }
 window.addEventListener('scroll',scrollHandler)
   
@@ -80,12 +115,12 @@ window.addEventListener('scroll',scrollHandler)
   </div >
   <div className='flex w-full justify-between '>
   <div className='w-[50%]'>
-    <input type='text' className='border-2 border-orange-500 rounded h-[40px] w-[40%]' />
-    <button className='bg-orange-500 rounded h-[40px] font-bold'>search products</button>
+    <input type='text' className='border-2 border-orange-500 rounded h-[40px] w-[40%]' value={productName} onChange={(e)=>{setProductName(e.target.value)}}  />
+    <button className='bg-orange-500 rounded h-[40px] font-bold' onClick={navProductPage}  >search products</button>
   </div>
   <div className='w-[50%]'>
-    <input type='text' className='border-2 border-orange-500 rounded h-[40px]' />
-    <button className='bg-orange-500 rounded h-[40px] font-bold'>search shops</button>
+    <input type='text' className='border-2 border-orange-500 rounded h-[40px]' onChange={(e)=>{setStoreValue(e.target.value)}} value={storeValue} />
+    <button className='bg-orange-500 rounded h-[40px] font-bold' onClick={StoreInformation} >search shops</button>
   </div>
 </div>
 

@@ -8,6 +8,8 @@ import ProductDetais from './productdetails.jsx'
 import PlaceOrder from './placeorder.jsx'
 import About from './about.jsx'
 import Cart from './cart.jsx'
+import SearchProducts from './searchproducts.jsx'
+import SearchStore from './searchStore.jsx'
 import Catagories from './catagories.jsx'
 import Productcred from './product-cred.jsx'
 import Contact from './contact.jsx'
@@ -43,6 +45,9 @@ function AppRoutes(){
       <Route path='/product-details/:productname?/:productstock?/:productprice?/:productcatagory?/:productdisc?/:productdiscription?/:productvarients?/:firstimage?/:secondimage?/:thirdimage?/:forthimage?/:productID?/:username?' element={<ProductDetais></ProductDetais>} />  
       <Route path="/item-details" element={<Itemdetails></Itemdetails>} />
       <Route path="/place-order" element={<PlaceOrder></PlaceOrder>} />
+      <Route path="/search-store" element={<SearchStore></SearchStore>} />
+      <Route path="/search-products/:name?" element={<SearchProducts></SearchProducts>} />
+
 
  
       
