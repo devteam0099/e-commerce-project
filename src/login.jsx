@@ -8,7 +8,7 @@ import axios from 'axios'
  const userCredentials = []
 
 function Login(){
-    const {setglobaldata} = useData()
+    const {setglobaldata,setLoginDetails} = useData()
    
     
     const Navigate = useNavigate()
@@ -77,6 +77,7 @@ function Login(){
             .then((resp)=>{
              alert('login request has been recieved')
              console.log(resp.data)
+             setLoginDetails(resp.data.username)
             const data = [resp.data.firstname,resp.data.lastname,resp.data.username,resp.data.email,resp.data.profileimage]
             userCredentials.push(resp.data.firstname,resp.data.lastname,resp.data.username,resp.data.email)
             console.log(userCredentials)

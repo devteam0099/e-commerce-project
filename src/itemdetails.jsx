@@ -4,7 +4,7 @@ import { useState,useEffect } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import Slider from 'react-smart-slider'
-import { useParams ,useLocation, Navigate} from 'react-router-dom'
+import { useParams ,useLocation,useNavigate, Navigate} from 'react-router-dom'
 
 const orderobject = {}
 
@@ -51,8 +51,9 @@ const product = {
 
 export default function Itemdetails() {
   const location = useLocation()
+  const navigate = useNavigate()
   console.log(location.state)
-  const {productName,productDiscount,productCatagory,productDisccription,productVarients,productStock,productPrice,productColors,productSizes,productImages} = location.state
+  const {_id,productName,productDiscount,productCatagory,productDisccription,productVarients,productStock,productPrice,productColors,productSizes,productImages} = location.state
    console.log(productSizes)
    const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
@@ -108,6 +109,21 @@ export default function Itemdetails() {
    console.log(orderobject)
    setorder(true)
 
+  }
+ async  function cartHandler(){
+    if (loginDetails === null) {
+      alert('you must login before adding items to cart')
+    } else {
+       try {
+        const resp = await axios.post('http://localhost:3000/api/cart/cart-products',{_id})
+           alert(resp.data.message)
+         
+
+         
+       } catch (error) {
+        alert('error in adding cart')
+       }
+    }
   }
  
   console.log(orderobject)
@@ -261,7 +277,7 @@ export default function Itemdetails() {
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-orange-500 px-8 py-3 text-base font-medium text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
+             onClick={cartHandler} >
                 Add to cart
               </button>
               

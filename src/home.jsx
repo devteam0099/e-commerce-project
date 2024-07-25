@@ -3,6 +3,7 @@ import SmartSlider from 'react-smart-slider'
 import { json, Navigate ,useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { useState,useEffect } from 'react'
+import useData from './contextApi'
 import Product from './products'
 
 export default function Home() {
@@ -15,7 +16,8 @@ export default function Home() {
   let [productName,setProductName] = useState('')
   let [scrollMonitor,setScrollMonitor] = useState(false)
   let [productData,setProductData] = useState(null)
-  let [navigator,setNavigator] = useState(false)  
+  let [navigator,setNavigator] = useState(false) 
+  const {globaldata,setglobaldata} = useData() 
 
       useEffect(()=>{
        ;(
@@ -57,15 +59,16 @@ export default function Home() {
 
        let sliderimages= [
          {
-           url : 'D:\OneDrive\Desktop\sample images\img1.jpeg'
+           url : 'https://res.cloudinary.com/dsv8gqse5/image/upload/v1717757875/sample7.jpg.jpg',
+           
          },
          {
-           url : 'D:\OneDrive\Desktop\sample images\img4.jpeg'
+           url : 'https://res.cloudinary.com/dsv8gqse5/image/upload/v1717757853/sample1.avif.avif'
          },
          {
-           url : 'D:\OneDrive\Desktop\sample images\img5.jpeg'
+           url :  'https://res.cloudinary.com/dsv8gqse5/image/upload/v1717753999/sample%20images.jpg'
          },{
-           url : 'D:\OneDrive\Desktop\sample images\img7.jpeg'
+           url : 'https://res.cloudinary.com/dsv8gqse5/image/upload/v1717757853/sample8.jpg.jpg'
          }
         ]
 
@@ -94,6 +97,8 @@ export default function Home() {
         function navProductPage(){
           navigation(`/search-products/${productName}`)
         }
+
+        
   
       if(navigator){
         return <Navigate to='/item-details' state={productData} />
@@ -109,7 +114,7 @@ window.addEventListener('scroll',scrollHandler)
   
   
   <div className='h-[] w-[]'>
-  <SmartSlider  buttonShape="square"  autoPlay={true} autoPlayDuration={5000} 
+  <SmartSlider  buttonShape="square" slides={sliderimages} autoPlay={true} autoPlayDuration={5000} 
  />
  
   </div >
@@ -118,7 +123,7 @@ window.addEventListener('scroll',scrollHandler)
     <input type='text' className='border-2 border-orange-500 rounded h-[40px] w-[40%]' value={productName} onChange={(e)=>{setProductName(e.target.value)}}  />
     <button className='bg-orange-500 rounded h-[40px] font-bold' onClick={navProductPage}  >search products</button>
   </div>
-  <div className='w-[50%]'>
+  <div className='w-[50%] '>
     <input type='text' className='border-2 border-orange-500 rounded h-[40px]' onChange={(e)=>{setStoreValue(e.target.value)}} value={storeValue} />
     <button className='bg-orange-500 rounded h-[40px] font-bold' onClick={StoreInformation} >search shops</button>
   </div>

@@ -24,9 +24,10 @@ import Navbar from './navbar.jsx'
 
 function AppRoutes(){
     let[globaldata,setglobaldata] = useState()
+    let [loginDetails,setLoginDetails] = useState(null)
 
     return(
-        <GlobaldataProvider value={{globaldata,setglobaldata}}>     
+        <GlobaldataProvider value={{globaldata,setglobaldata,loginDetails,setLoginDetails}}>     
         <BrowserRouter>
     <Navbar />
     <Routes>

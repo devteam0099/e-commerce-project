@@ -42,7 +42,7 @@ function Navbar(){
                
                 <div className="text-center hidden md:block">
                 <FontAwesomeIcon icon={faPlus} className="text-[orange]" />
-                <h4 className="text-white" ><NavLink to="/add-items" className={({ isActive }) => (isActive ? "text-orange-500" : "")}>Add Product</NavLink></h4>
+                <h4 className="text-white" ><NavLink to="/add-items" className={({ isActive }) => (isActive ? "text-orange-500" : "")}>Profile</NavLink></h4>
                 </div>
                
                 <div className="text-center hidden md:block">

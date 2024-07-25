@@ -151,7 +151,7 @@ console.log(storeinfo)
         <div className='relative'>
         <div className='h-[20%] w-[90%]  flex justify-between mx-auto mt-4 rounded-xl shadow-black shadow-md p-2  left-14  '>
         <img src={ profileimage || globaldata?.profileimage} alt='No Profile Image' className='w-[80px] h-[80px] rounded-[50%] border-2 border-black' onClick={displaycred} />
-        <div className='font-bold text-3xl mt-4'>storename</div>
+        <div className='font-bold text-3xl mt-4'>{storeinfo.owner}</div>
         <div className='w-[30%] mt-5'>
        <button className='bg-orange-500 rounded  h-[50px] mx-4 p-2 font-bold' onClick={createproductnav}>Create a Product</button>
        <button className='text-red-500 border-2 border-red-300  rounded  h-[50px] p-2 font-bold ' onClick={logout}>Log Out</button>
@@ -171,23 +171,24 @@ console.log(storeinfo)
 
        {success && (
   <div>
-    <div className="text-center font-bold text-4xl my-5">Products</div>
-    {productData.map((firstArray) => (
-      <div key={firstArray._id} className="inline-block h-[280px] w-[270px] mx-5">
-        {firstArray.map((item) => (
-          <div className=''>
-            <div key={item.createdAt} className='h-[280px] border-2 border-black w-[270px] m-10 rounded overflow-hidden cursor-pointer ' onClick={()=>{productDetails(item)}}>
-              <img className='h-[180px] hover:scale-105 ' src={item.productImages[0]} />
-              <div className='font-bold text-center ' >Product name : {item.productName}</div>
-              <div className='font-bold text-center' >Product price : {item.productPrice}</div>
-              <div className='font-bold text-center' >Catagory : {item.productCatagory}</div>
-            </div>
+  <div className="text-center font-bold text-4xl my-5 ">Products</div>
+  {productData.map((firstArray) => (
+    <div key={firstArray._id} className="inline-block h-[280px] w-[270px] mx-5 ">
+      {firstArray.map((item) => (
+        <div className='w-full '>
+          <div key={item.createdAt} className='h-[280px] border-2 border-black w-[270px] m-10 rounded overflow-hidden cursor-pointer ' onClick={()=>{productDetails(item)}}>
+            <img className='h-[180px] hover:scale-105 ' src={item.productImages[0]} />
+            <div className='font-bold text-center ' >Product name : {item.productName}</div>
+            <div className='font-bold text-center' >Product price : {item.productPrice}</div>
+            <div className='font-bold text-center' >Catagory : {item.productCatagory}</div>
           </div>
-        ))}
-      </div>
-    ))}
+        </div>
+      ))}
+    </div>
+  ))}
 
-  </div>
+</div>
+
 )}
 
 
